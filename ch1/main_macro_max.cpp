@@ -1,6 +1,7 @@
 #include "macro_max.hpp"
 
 #include <cstdio>
+#include <iostream>
 
 using namespace std;
 
