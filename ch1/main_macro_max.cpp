@@ -14,6 +14,7 @@ implement(MAX, double)
 
 int main(int argc, char** argv)
 {
+    cout << "========== ch1 : macro max ==========" << endl;
     int i = 0;
     int j = 2;
     double u = 1.23;
