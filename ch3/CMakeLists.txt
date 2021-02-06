@@ -18,3 +18,24 @@ add_executable(functor
     main_functor.cpp
     functor.hpp
 )
+
+add_executable(generic_program
+    main_generic_program.cpp
+    generic_program.hpp
+)
+
+add_executable(helper_func_for_predict
+    main_helper_func_for_predict.cpp
+    helper_func_for_predict.hpp
+)
+
+add_executable(tag_dispatch
+    main_tag_dispatch.cpp
+    tag_dispatch.hpp    
+)
+
+add_executable(params_extension
+    main_params_extension.cpp
+    params_extension.hpp
+)
+
