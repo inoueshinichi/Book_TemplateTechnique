@@ -30,6 +30,21 @@ struct factorial<0> {
     static const int value = 1;
 };
 
+// -----------------------------
+
+template <typename T, int N>
+struct add_pointers {
+    using type = add_pointers<T, N-1>::type*;
+};
+
+template <typename T>
+struct add_pointers<T, 0> {
+    using type = T;
+};
+
+template <typename T, int N>
+using add_pointers_t = add_pointers<T, N>::type;
+
 ///////////////////////////////
 // square
 template <int N>
@@ -60,6 +75,9 @@ constexpr int pow_con(int x, int n) {
 /////////////////////////////////
 // 型を操作するメタ関数
 /////////////////////////////////
+
+/////////////////////////////////
+/* 受け取ったT型をそのまま返す */
 template <typename T>
 struct identity {
     using type = T; // T型を返す
@@ -67,4 +85,108 @@ struct identity {
 
 // エイリアステンプレート
 template <typename T>
-using identity_t = _identity<T>::type;
+using identity_t = identity<T>::type;
+
+
+////////////////////////////////////////
+/* 受け取ったT型のポインタ型T*を返す */
+template <typename T>
+struct add_pointer {
+    using type = T*; // ポインタ型を返す
+};
+
+// エイリアステンプレート
+template <typename T>
+using add_pointer_t = add_pointer<T>::type; 
+
+
+//////////////////////////////////////////////
+/* 受け取ったT型のconst参照型const T&を返す */
+template <typename T>
+struct add_clr {
+    using type = const T&;
+};
+
+// エイリアステンプレート
+template <typename T>
+using add_clr_t = add_clr<T>::type;
+
+
+/////////////////////////////////////////////////
+// 型を操作するメタ関数は小さい粒度で作成すること
+/////////////////////////////////////////////////
+
+template <typename T>
+struct add_const {
+    using type = const T;
+};
+template <typename T>
+using add_const_t = add_const<T>::type;
+
+// ----------------------------------------------------------
+template <typename T>
+struct add_lvalue_reference {
+    using type = T&;
+};
+
+// Tに左辺値参照型が入力されたときに対処するために部分特殊化
+template <typename T>
+struct add_lvalue_reference<T&> {
+    using type = T&;
+};
+
+// エイリアステンプレート
+template <typename T>
+using add_lvalue_reference_t = add_lvalue_reference<T>::type;
+
+// ----------------------------------------------------------
+
+// 小さい粒度のメタ関数を組み合わせる(C++11とは違う)
+template <typename T>
+using add_clr_mix_t = add_const_t<add_lvalue_reference_t<T>>;
+
+
+////////////////////////
+// 型修飾を外すメタ関数
+////////////////////////
+
+/* remove const */
+template <typename T> // プライマリーテンプレート
+struct remove_const {
+    using type = T;
+};
+
+template <typename T> // 部分特殊化でParamTypeがconst Tのとき、戻り値をTにする
+struct remove_const<const T> {
+    using type = T;
+};
+
+template <typename T>
+using remove_const_t = remove_const<T>::type;
+
+// 部分特殊化したテンプレートクラスに対するエイリアステンプレートは必要無いみたい
+// template <typename T>
+// using remove_const_t = remove_const<const T>::type;
+
+
+
+/* remove volatile */
+template <typename T>
+struct remove_volatile {
+    using type = T;
+};
+
+template <typename T>
+struct remove_volatile<volatile T> {
+    using type = T;
+};
+
+template <typename T>
+using remove_volatile_t = remove_volatile<T>::type;
+
+
+
+/* remove const volatile */
+template <typename T>
+using remove_cv_t = remove_const_t<remove_volatile_t<T>>;
+
