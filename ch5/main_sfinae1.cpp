@@ -18,7 +18,9 @@ int main(int argc, char** argv) {
     std::cout << is_pointer_v<char*> << std::endl;
 
     // 型Tが特定の型を持っているか否かを判定する関数
-    static_assert(has_iterator<std::vector<int>>(), "std::vector<int>はiterator型を持っている");
+    // static_assert(has_iterator<std::vector<int>>(), "std::vector<int>はiterator型を持っている"); // ver1
+    static_assert(has_iterator<std::vector<int>>::value, "std::vector<int>はiterator型を持っている"); // ver2
+    static_assert(has_iterator_v<std::vector<int>>, "std::vector<int>はiterator型を持っている"); // ver3
     // static_assert(has_iterator<int>(), "intはiterator型を持っていない");
 
     return 0;

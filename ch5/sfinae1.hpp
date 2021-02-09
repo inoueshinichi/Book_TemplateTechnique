@@ -61,17 +61,53 @@ constexpr bool is_pointer_v = is_pointer<T>::value;
 // テンプレートの特殊化によって表現できない型特性メタ関数はSFINAEで実現する
 
 // ver1
-template<class T>
-constexpr bool has_iterator_impl(typename T::iterator*) {
-    return true;
-}
+// template<class T>
+// constexpr bool has_iterator_impl(typename T::iterator*) {
+//     return true;
+// }
 
-template<class T>
-constexpr bool has_iterator_impl(...) {
-    return false;
-}
+// template<class T>
+// constexpr bool has_iterator_impl(...) {
+//     return false;
+// }
 
-template <class T>
-constexpr bool has_iterator() {
-    return has_iterator_impl<T>(nullptr);
-}
+// template <class T>
+// constexpr bool has_iterator() {
+//     return has_iterator_impl<T>(nullptr);
+// }
+
+// ver2
+// template <typename T>
+// class has_iterator {
+//     template <typename U>
+//     static constexpr bool check(typename U::iterator*)
+//     {
+//         return true;
+//     }
+
+//     template <typename U>
+//     static constexpr bool check(...)
+//     {
+//         return false;
+//     }
+
+// public:
+//     static const bool value = check<T>(nullptr);
+// };
+
+// ver3 (C++11以降)
+struct has_iterator_impl
+{
+    template <typename T>
+    static std::true_type check(typename T::iterator*);
+
+    template <typename T>
+    static std::false_type check(...);
+};
+
+template <typename T>
+class has_iterator : public decltype(has_iterator_impl::check<T>(nullptr))
+{};
+
+template <typename T>
+constexpr bool has_iterator_v = has_iterator<T>::value;
