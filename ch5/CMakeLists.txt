@@ -13,3 +13,13 @@ add_executable(sfinae1
     main_sfinae1.cpp
     sfinae1.hpp
 )
+
+add_executable(sfinae2
+    main_sfinae2.cpp
+    sfinae2.hpp
+)
+
+add_executable(enable_if
+    main_enable_if.cpp
+    enable_if.hpp
+)
