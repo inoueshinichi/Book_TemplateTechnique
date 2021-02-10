@@ -26,7 +26,7 @@ namespace Is
     using enable_if_t = enable_if<T>::type;
 }
 
-// ver1
+// ver1(仮引数の型)
 template <typename T>
 void check(T value, typename std::enable_if_t<std::is_class<T>::value>* = nullptr)
 {
@@ -39,5 +39,5 @@ void check(T value, typename std::enable_if_t<!std::is_class<T>::value>* = nullp
     std::cout << "Tはクラスではない" << std::endl;
 }
 
-// ver2
+// ver2(戻り値の型)
 
