@@ -98,7 +98,21 @@ elseif(APPLE)
 
 message(STATUS "Compiler: Clang in macOS")    
 
-    message(FATAL_ERROR "No Implementation of Build Rule on Clang with LLVM in macOS.")
+    # message(FATAL_ERROR "No Implementation of Build Rule on Clang with LLVM in macOS.")
+
+    # Build Options
+    set(CMAKE_CXX_FLAGS "-O1")
+    set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g")
+    set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
+    set(CMAKE_CXX_FLAGS_MINSIZEREL "-Os -DNDEBUG")
+    set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")
+
+    # C++標準に準拠しない拡張機能を無効化
+    string(APPEND CMAKE_CXX_FLAGS " --pedantic-errors")
+
+    string(APPEND CMAKE_CXX_FLAGS " -pedantic")
+    string(APPEND CMAKE_CXX_FLAGS " -Wall")
+
 
 else()
     message(STATUS "Compiler: GCC in Linux")
@@ -106,12 +120,12 @@ else()
     # 詳細情報の表示
     set(CMAKE_VERBOSE_MAKEFILE ON)
 
-    # Build Options(マルチコンフィギュレーション:visual studio対応)
+    # Build Options(マルチコンフィギュレーション)
     set(CMAKE_CXX_FLAGS "-O1")
     set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g")
     set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
     set(CMAKE_CXX_FLAGS_MINSIZEREL "-Os -DNDEBUG")
-    set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g -DNDEBUG")
+    set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")
 
     # C++標準に準拠しない拡張機能を無効化
     string(APPEND CMAKE_CXX_FLAGS " --pedantic-errors")
