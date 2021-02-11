@@ -23,3 +23,8 @@ add_executable(enable_if
     main_enable_if.cpp
     enable_if.hpp
 )
+
+add_executable(optimize_by_sfinae
+    main_optimize_by_sfinae.cpp
+    optimize_by_sfinae.hpp
+)
