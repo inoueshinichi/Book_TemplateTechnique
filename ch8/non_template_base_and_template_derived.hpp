@@ -63,7 +63,7 @@ namespace example {
         class shared_deleter_base {
             shared_deleter_base() {}
             virtual ~shared_deleter_base() {}
-            virtual void destroy() = 0;
+            virtual void destroy() = 0; 
         };
 
         template <class T, class D>
@@ -86,7 +86,7 @@ namespace example {
         template <class T>
         class shared_ptr {
             T* object_; // ポインタ
-            shared_deleter_base* deleter_; // カスタム削除子
+            shared_deleter_base* deleter_; // カスタム削除子(インターフェースクラスしか持てない)
         public:
             // カスタム削除子を使用しないコンストラクタ
             explicit shared_ptr(T* object)
@@ -103,7 +103,7 @@ namespace example {
             ~shared_ptr() {
                 // カスタム削除子が指定されていたらそれを削除
                 if (deleter_) {
-                    deleter_->destroy();
+                    deleter_->destroy(); // 継承による派生クラスの関数が呼べる.
                     delete deleter_;
                     deleter_ = nullptr;
                 } else {
