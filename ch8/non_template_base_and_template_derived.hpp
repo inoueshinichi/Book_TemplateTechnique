@@ -60,7 +60,7 @@ namespace example {
         /////////////////////////////
         // shared_ptrのカスタム削除子
         /////////////////////////////
-        class shared_deleter_base {
+        struct shared_deleter_base {
             shared_deleter_base() {}
             virtual ~shared_deleter_base() {}
             virtual void destroy() = 0; 
@@ -71,7 +71,7 @@ namespace example {
             T* object_;
             D deleter_;
         public:
-            sahred_deleter(T* object, D deleter)
+            shared_deleter(T* object, D deleter)
                 : object_(object)
                 , deleter_(deleter) {}
 
@@ -111,6 +111,13 @@ namespace example {
                     delete object_;
                     object_ = nullptr;
                 }
+            }
+
+            T* operator->() {
+                if (object_)
+                    return object_;
+                else
+                    return nullptr;
             }
         };
     }
