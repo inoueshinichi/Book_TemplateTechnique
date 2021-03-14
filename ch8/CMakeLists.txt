@@ -23,3 +23,8 @@ add_executable(non_template_base_and_template_derived
     main_non_template_base_and_template_derived.cpp
     non_template_base_and_template_derived.hpp
 )
+
+add_executable(type_erasure_any
+    main_type_erasure_any.cpp
+    type_erasure_any.hpp
+)
