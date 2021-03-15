@@ -28,3 +28,8 @@ add_executable(type_erasure_any
     main_type_erasure_any.cpp
     type_erasure_any.hpp
 )
+
+add_executable(type_erasure_functional
+    main_type_erasure_functional.cpp
+    type_erasure_functional.hpp
+)
