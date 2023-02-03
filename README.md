@@ -1,5 +1,6 @@
 # TemplateTechnique
 C++テンプレートテクニック第二版の実装</br>
+https://www.sbcr.jp/product/4797376685/
 
 C++11からC++14時代以降の変更として、以下を実装</br>
 1) エイリアステンプレートの利用 CLASS<TemplateParams>::type -> CLASS_t<TemplateParams>を使用する.</br>
